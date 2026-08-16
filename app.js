@@ -212,18 +212,93 @@ function showCharSection(name){
 
 function renderCharInfo(c){
   const el=document.getElementById('cSec_info'); if(!el) return;
-  const row=(k,v)=>v?`<span class="info-k">${k}</span><span class="info-v">${v}</span>`:'';
-  const long=(k,v)=>v?`<div class="info-long"><span class="info-k">${k}</span><span class="info-v">${v}</span></div>`:'';
-  el.innerHTML=`
-    <div class="info-grid" style="margin-bottom:14px">
+  const row=(k,v)=>v?`<div class="ci-row"><span class="ci-k">${k}</span><span class="ci-v">${v}</span></div>`:'';
+  const long=(k,v)=>v?`<div class="ci-long"><div class="ci-k">${k}</div><div class="ci-long-v">${String(v).replace(/\n/g,'<br>')}</div></div>`:'';
+  const sec=(title)=>`<div class="ci-section-title">${title}</div>`;
+
+  el.innerHTML = `
+    ${sec('Основные данные')}
+    <div class="ci-grid">
       ${row('Пол',c.gender)}${row('Дата рождения',c.birth_date)}${row('Дата смерти',c.death_date)}
       ${row('Семья',c.family)}${row('Поколение',c.generation)}${row('Тип',c.char_type==='secondary'?'Второстепенный':'Главный')}
     </div>
-    ${long('Внешность',c.appearance)}
-    ${long('Характер',c.personality)}
-    ${long('Мотивация',c.motivation)}
+    ${long('Биография',c.bio)}
+
+    ${c.height||c.body_type||c.posture?`${sec('Внешность — параметры')}
+    <div class="ci-grid">
+      ${row('Рост',c.height)}${row('Телосложение',c.body_type)}${row('Сила (впечатление)',c.build_strength)}
+      ${row('Осанка',c.posture)}${row('Правша/левша',c.handedness)}
+    </div>`:''}
+    ${c.face_shape||c.eyes||c.skin?`${sec('Лицо')}
+    <div class="ci-grid">
+      ${row('Форма лица',c.face_shape)}${row('Лоб',c.forehead)}${row('Скулы',c.cheekbones)}
+      ${row('Подбородок',c.chin)}${row('Челюсть',c.jaw)}
+      ${row('Кожа',c.skin)}${row('Загар/особенности',c.skin_tan)}
+      ${row('Глаза',c.eyes)}${row('Форма глаз',c.eye_shape)}${row('Посадка глаз',c.eye_set)}
+      ${row('Брови/ресницы',c.brows_lashes)}${row('Нос',c.nose)}${row('Губы',c.lips)}
+      ${row('Волосы',c.hair)}${row('Текстура волос',c.hair_texture)}
+      ${row('Уши',c.ears)}${row('Шея',c.neck)}
+    </div>
+    ${long('Причёска',c.hairstyle)}
+    ${long('Особые приметы',c.distinctive_marks)}`:''}
+    ${c.style||c.accessories?`${sec('Стиль и образ')}
+    <div class="ci-grid">${row('Цветовая палитра',c.color_palette)}${row('Обувь',c.footwear)}</div>
+    ${long('Стиль одежды',c.style)}
+    ${long('Аксессуары',c.accessories)}
+    ${long('Личные предметы',c.personal_items)}`:''}
+    ${c.gait||c.mannerisms||c.voice?`${sec('Поведение и образ')}
+    ${long('Походка',c.gait)}
+    ${long('Манера держаться',c.mannerisms)}
+    <div class="ci-grid">${row('Типичная эмоция/взгляд',c.gaze)}${row('Голос',c.voice)}</div>
+    ${long('Первое впечатление',c.first_impression)}
+    ${long('Что делает узнаваемым',c.signature_feature)}`:''}
+    ${long('Описание внешности (общее)',c.appearance)}
+
+    ${c.personality||c.personality_words?`${sec('Характер — основа')}
+    ${c.personality_words?`<div style="margin-bottom:8px"><span class="ci-k">Три слова: </span><strong>${c.personality_words}</strong>${c.personality_not?` / не: <em>${c.personality_not}</em>`:''}</span></div>`:''}
+    <div class="ci-grid">
+      ${row('Темперамент',c.temperament)}${row('Интроверт/экстраверт',c.introvert)}
+      ${row('Что важнее',c.core_priority)}
+    </div>
+    ${long('Шкалы',c.personality_scales)}
+    ${long('Общий характер',c.personality)}
+    ${long('Самооценка',c.self_esteem)}
+    <div class="ci-grid">${row('Гл. достоинство',c.self_strength)}${row('Гл. недостаток',c.self_weakness)}</div>`:''}
+
+    ${c.worldview||c.fears||c.desires?`${sec('Ценности, страхи, желания')}
+    ${long('Мировоззрение',c.worldview)}
+    ${long('Что непростительно',c.unforgivable)}
+    ${long('Моральные границы',c.moral_limits)}
+    ${long('Страхи',c.fears)}
+    ${long('Желания и мечты',c.desires)}
+    ${long('Мотивация',c.motivation)}`:''}
+
+    ${c.social||c.friendship?`${sec('Общение и отношения')}
+    ${long('Общение',c.social)}
+    ${long('Дружба',c.friendship)}
+    ${long('Конфликты',c.conflict_style)}
+    ${long('Лидерство',c.leadership)}
+    ${long('Интеллект',c.intellect)}
+    ${long('Поведение среди близких',c.behavior_close)}
+    ${long('Реакция на стресс',c.stress_response)}`:''}
+
+    ${c.humor||c.habits||c.paradoxes?`${sec('Привычки и глубокое')}
+    ${long('Эмоциональность',c.emotions)}
+    ${long('Юмор',c.humor)}
+    ${long('Привычки',c.habits)}
+    ${long('Маленькие слабости',c.favorites)}
+    ${long('Что выводит из себя',c.triggers)}
+    ${long('Манера речи',c.speech_style)}
+    ${long('Парадоксы личности',c.paradoxes)}
+    ${long('Внутренние противоречия',c.inner_conflicts)}
+    ${long('Как воспринимают другие',c.perception)}`:''}
+
+    ${c.secret||c.happiest_memory?`${sec('Тайное')}
     ${long('Тайна',c.secret)}
-    ${long('Заметки',c.notes)}
+    ${long('Счастливейшая память',c.happiest_memory)}
+    ${long('Болезненная память',c.painful_memory)}`:''}
+
+    ${long('Заметки автора',c.notes)}
     ${(c.tags||[]).length?`<div style="margin-top:10px;display:flex;gap:5px;flex-wrap:wrap">${c.tags.map(t=>`<span style="font-size:11px;padding:2px 8px;border-radius:20px;background:var(--surface2);border:1px solid var(--border)">${t}</span>`).join('')}</div>`:''}
   `;
 }
@@ -385,14 +460,32 @@ function showCharModal(charId=null){
   editingCharId=charId;
   const c=charId?getChar(charId):null;
   document.getElementById('charModalTitle').textContent=charId?'Редактировать персонажа':'Новый персонаж';
-  const fields=['name','nickname','role','char_type','family','generation','gender','birth_date','death_date','bio','appearance','personality','motivation','secret','notes','emoji'];
-  fields.forEach(f=>{const el=document.getElementById(`cf_${f}`);if(el)el.value=c?c[f]||'':'';});
+  const allCfFields=['name','nickname','role','char_type','family','generation','gender','birth_date','death_date','bio','notes','emoji',
+    'height','body_type','build_strength','posture','handedness','gait','mannerisms','gaze','voice',
+    'first_impression','signature_feature','appearance',
+    'face_shape','forehead','cheekbones','chin','jaw',
+    'skin','skin_tan','distinctive_marks',
+    'eyes','eye_shape','eye_set','brows_lashes',
+    'nose','lips','hair','hair_texture','hairstyle','ears','neck','hands',
+    'style','color_palette','footwear','accessories','personal_items',
+    'personality','personality_words','personality_not','temperament','introvert','core_priority','personality_scales',
+    'self_esteem','self_strength','self_weakness',
+    'speech_style','paradoxes','inner_conflicts',
+    'worldview','unforgivable','moral_limits','fears','desires','motivation','stress_response',
+    'social','friendship','conflict_style','leadership','intellect','behavior_close',
+    'emotions','humor','habits','favorites','triggers','perception',
+    'secret','happiest_memory','painful_memory'
+  ];
+  allCfFields.forEach(f=>{const el=document.getElementById(`cf_${f}`);if(el)el.value=c?c[f]||'':'';});
   if(document.getElementById('cf_char_type')) document.getElementById('cf_char_type').value=c?.char_type||'main';
   document.getElementById('charModal').classList.add('open');
 }
 
 function closeCharModal(){
   document.getElementById('charModal').classList.remove('open');
+  // Reset to first tab
+  document.querySelectorAll('.form-tab').forEach((t,i)=>t.classList.toggle('active',i===0));
+  document.querySelectorAll('.form-section').forEach((s,i)=>s.style.display=i===0?'block':'none');
 }
 
 async function saveChar(){
@@ -400,7 +493,22 @@ async function saveChar(){
   if(!name){toast('Введи имя');return;}
   const btn=document.getElementById('saveCharBtn');
   btn.disabled=true;
-  const fields=['name','nickname','role','char_type','family','generation','gender','birth_date','death_date','bio','appearance','personality','motivation','secret','notes','emoji'];
+  const fields=['name','nickname','role','char_type','family','generation','gender','birth_date','death_date','bio','notes','emoji',
+    'height','body_type','build_strength','posture','handedness','gait','mannerisms','gaze','voice',
+    'first_impression','signature_feature','appearance',
+    'face_shape','forehead','cheekbones','chin','jaw',
+    'skin','skin_tan','distinctive_marks',
+    'eyes','eye_shape','eye_set','brows_lashes',
+    'nose','lips','hair','hair_texture','hairstyle','ears','neck','hands',
+    'style','color_palette','footwear','accessories','personal_items',
+    'personality','personality_words','personality_not','temperament','introvert','core_priority','personality_scales',
+    'self_esteem','self_strength','self_weakness',
+    'speech_style','paradoxes','inner_conflicts',
+    'worldview','unforgivable','moral_limits','fears','desires','motivation','stress_response',
+    'social','friendship','conflict_style','leadership','intellect','behavior_close',
+    'emotions','humor','habits','favorites','triggers','perception',
+    'secret','happiest_memory','painful_memory'
+  ];
   const data={};
   fields.forEach(f=>{const el=document.getElementById(`cf_${f}`);if(el)data[f]=el.value||null;});
   data.name=name;
