@@ -22,7 +22,7 @@
   </nav>
   <div class="safe">
     <b>Тестовое пространство</b>
-    <p>Отдельный Supabase, не связан с основным приложением. Безопасно тестировать новый дизайн.</p>
+    <p>Отдельный Supabase, не связан с основным приложением.</p>
     <span>● Supabase подключён</span>
   </div>
 </aside>
@@ -30,16 +30,16 @@
 <main>
   <header>
     <div>
-      <label id="headerLabel">CHARACTER BIBLE NEXT</label>
+      <label>CHARACTER BIBLE NEXT</label>
       <h1 id="pageTitle">История в одном взгляде</h1>
     </div>
     <div class="actions">
       <button class="soft" id="reset">↺ Обновить</button>
-      <button class="primary" data-open="migration">⇄ Импорт данных</button>
+      <button class="primary" id="addCharBtn">＋ Персонаж</button>
     </div>
   </header>
 
-  <!-- ── LIBRARY ── -->
+  <!-- LIBRARY -->
   <section id="library" class="tab active">
     <div class="intro">
       <div>
@@ -50,27 +50,23 @@
           <button class="chip" data-filter="lead">Главные герои</button>
         </div>
       </div>
+      <button class="primary" data-open="migration">⇄ Импорт</button>
     </div>
-
     <div class="stats">
       <div><b id="characterCount">—</b><span>персонажей</span></div>
       <div><b id="bookCount">—</b><span>книг</span></div>
       <div><b id="imageCount">—</b><span>изображений</span></div>
       <div><b id="relationCount">—</b><span>связей</span></div>
     </div>
-
     <div id="cards" class="cards">
-      <div class="empty" style="grid-column:1/-1">
-        <div class="empty-icon">⏳</div>
-        <p>Загрузка данных…</p>
-      </div>
+      <div class="empty" style="grid-column:1/-1"><div class="empty-icon">⏳</div><p>Загрузка…</p></div>
     </div>
   </section>
 
-  <!-- ── CHARACTER ── -->
+  <!-- CHARACTER -->
   <section id="character" class="tab">
     <div class="character-head">
-      <div class="portrait large" id="heroPortrait">?</div>
+      <div class="portrait large" id="heroPortrait" style="background:linear-gradient(135deg,#8b3a1a,#b8922a);color:white">?</div>
       <div style="flex:1">
         <div id="heroRoles" class="roles"></div>
         <h2 id="heroName">Выбери персонажа</h2>
@@ -78,179 +74,154 @@
         <small id="heroMeta" style="color:var(--text3);font-size:11px;display:block;margin-top:6px"></small>
       </div>
       <div class="hero-buttons">
-        <button class="primary" id="pdfExport">↓ Экспорт PDF</button>
-        <button class="soft" id="albumBtn">Альбом</button>
+        <button class="primary" id="pdfExport">↓ PDF</button>
+        <button class="soft" id="albumBtn">▧ Альбом</button>
+        <button class="soft" id="heroEditBtn">✎ Редактировать</button>
       </div>
     </div>
 
-    <div class="twocol">
-      <article>
-        <div class="head">
-          <h3>Отношения с двух сторон</h3>
-          <button class="primary small" data-open="relation">＋ Связь</button>
-        </div>
-        <div id="relationsList">
-          <div class="empty"><div class="empty-icon">🔗</div><p>Открой персонажа</p></div>
-        </div>
-      </article>
-
-      <article>
-        <div class="head">
-          <h3>Участие в книгах</h3>
-        </div>
-        <div id="bookList">
-          <div class="empty"><div class="empty-icon">📚</div><p>Открой персонажа</p></div>
-        </div>
-      </article>
+    <!-- Char sub-tabs -->
+    <div class="char-tabs">
+      <button class="char-tab active" data-sec="relations">Связи</button>
+      <button class="char-tab" data-sec="books">В книгах</button>
+      <button class="char-tab" data-sec="info">Внешность и характер</button>
     </div>
+
+    <!-- Relations section -->
+    <div id="cSec_relations">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+        <span style="font-size:14px;font-weight:600">Отношения</span>
+        <button class="primary small" data-open="relation">＋ Связь</button>
+      </div>
+      <div id="relationsList"></div>
+    </div>
+
+    <!-- Books section -->
+    <div id="cSec_books" style="display:none">
+      <div id="bookList"></div>
+    </div>
+
+    <!-- Info section -->
+    <div id="cSec_info" style="display:none"></div>
   </section>
 
-  <!-- ── RELATIONS ── -->
+  <!-- RELATIONS -->
   <section id="relations" class="tab">
     <div class="intro">
-      <div>
-        <h2>Карта связей</h2>
-        <p>Одна связь хранится в одном месте и содержит две точки зрения.</p>
-      </div>
+      <div><h2>Карта связей</h2><p>Все связи с двумя точками зрения в одном месте.</p></div>
       <button class="primary" data-open="relation">＋ Новая связь</button>
     </div>
-
     <div class="relations-list" id="relationsFullList">
       <div class="empty"><div class="empty-icon">⌘</div><p>Загрузка…</p></div>
     </div>
   </section>
 
-  <!-- ── ALBUM ── -->
+  <!-- ALBUM -->
   <section id="album" class="tab">
     <div class="intro">
-      <div>
-        <h2>Альбом образов</h2>
-        <p>Фотографии персонажей с описанием периода, эмоции и комментария.</p>
-      </div>
-      <button class="primary" id="albumPdf">↓ PDF альбома</button>
+      <div><h2>Альбом образов</h2><p>Все изображения с описанием периода, эмоции и комментария.</p></div>
+      <button class="primary" id="albumPdf">↓ PDF</button>
     </div>
-
-    <div class="age-line">
-      <span>Начало хронологии</span>
-      <i></i>
-      <span>Конец хронологии</span>
-    </div>
-
-    <div id="albumGrid" class="album-grid">
-      <div class="empty" style="grid-column:1/-1">
-        <div class="empty-icon">🖼</div>
-        <p>Изображений пока нет</p>
-      </div>
-    </div>
+    <div class="age-line"><span>Начало</span><i></i><span>Конец хронологии</span></div>
+    <div id="albumGrid" class="album-grid"></div>
   </section>
 
-  <!-- ── MIGRATION ── -->
+  <!-- MIGRATION -->
   <section id="migration" class="tab">
     <div class="migration">
-      <label>БЕЗОПАСНЫЙ ПЕРЕНОС</label>
-      <h2>Импорт данных</h2>
-      <p>Загрузи JSON из старого приложения — персонажи, связи и изображения импортируются автоматически. CSV-файл позволяет импортировать базовую информацию о персонажах.</p>
-
+      <label>ПЕРЕНОС ДАННЫХ</label>
+      <h2>Импорт из старого приложения</h2>
+      <p>Загрузи JSON-экспорт из основного приложения (кнопка PDF → JSON). Все персонажи, связи и ссылки на изображения перенесутся автоматически.</p>
       <div class="steps">
-        <div>
-          <b>1</b>
-          <span>
-            <strong>Экспортируй из старого приложения</strong>
-            <small>Используй кнопку JSON-экспорта — он сохраняет всё: поля, роли, связи и ссылки на изображения.</small>
-          </span>
-        </div>
-        <div>
-          <b>2</b>
-          <span>
-            <strong>Загрузи и проверь</strong>
-            <small>После выбора файла увидишь предварительный список — до записи в базу.</small>
-          </span>
-        </div>
-        <div>
-          <b>3</b>
-          <span>
-            <strong>Подтверди импорт</strong>
-            <small>Данные запишутся в новый Supabase. Операция необратима, но не затрагивает старое приложение.</small>
-          </span>
-        </div>
+        <div><b>1</b><span><strong>Экспортируй JSON из старого приложения</strong><small>Кнопка PDF → выбери JSON → скачает файл character-bible-ДАТА.json</small></span></div>
+        <div><b>2</b><span><strong>Загрузи файл здесь</strong><small>После выбора файла появится предварительный список</small></span></div>
+        <div><b>3</b><span><strong>Подтверди импорт</strong><small>Данные запишутся в новый Supabase</small></span></div>
       </div>
-
       <div class="import-grid">
-        <label class="upload">
-          <input type="file" id="importFile" accept=".json,.csv">
-          <b>↑ Выбрать файл</b>
-          <span>JSON или CSV</span>
-        </label>
-        <div class="warning">
-          <b>💡 Рекомендуемый формат — JSON</b>
-          <p>JSON из старого приложения содержит полную структуру: связи с двух сторон, роли по книгам, ссылки на изображения в Supabase Storage.</p>
-          <p>CSV подходит для базовой информации о персонажах без связей и фото.</p>
-          <button class="soft" id="downloadTemplate">↓ Шаблон CSV</button>
-        </div>
+        <label class="upload"><input type="file" id="importFile" accept=".json,.csv"><b>↑ Выбрать файл</b><span>JSON или CSV</span></label>
+        <div class="warning"><b>💡 Рекомендуется JSON</b><p>JSON содержит полную структуру: связи, роли по книгам, ссылки на изображения.</p><p>CSV подходит только для базовых данных о персонажах.</p><button class="soft" id="downloadTemplate">↓ Шаблон CSV</button></div>
       </div>
-
       <div id="importResult" class="import-result">Файл ещё не выбран.</div>
     </div>
   </section>
 </main>
 
-<!-- ── RELATION DIALOG ── -->
+<!-- RELATION DIALOG -->
 <dialog id="relationDialog">
   <form method="dialog">
-    <div class="dialog-head">
-      <h3>Двусторонняя связь</h3>
-      <button value="cancel">×</button>
-    </div>
-    <div class="pair">
-      <span id="fromName">Персонаж</span>
-      <b>↔</b>
-      <select id="toCharacter" style="flex:1"></select>
-    </div>
+    <div class="dialog-head"><h3 id="relDialogTitle">Новая связь</h3><button value="cancel">×</button></div>
+    <div class="pair"><span id="fromName">Персонаж</span><b>↔</b><select id="toCharacter" style="flex:1"></select></div>
     <div class="form-grid">
-      <label>
-        Взгляд первого персонажа
-        <textarea id="fromView" placeholder="Как этот персонаж воспринимает другого…"></textarea>
-      </label>
-      <label>
-        Взгляд второго персонажа
-        <textarea id="toView" placeholder="Как другой воспринимает первого…"></textarea>
-      </label>
-      <label>
-        Тип связи
-        <select id="relationType">
-          <option>Союз</option>
-          <option>Семья</option>
-          <option>Романтическая</option>
-          <option>Конфликт / враги</option>
-          <option>Наставник / ученик</option>
-          <option>Соперники</option>
-          <option>Нейтральные</option>
-        </select>
-      </label>
-      <label>
-        Интенсивность
-        <select id="relIntensity">
-          <option value="враждебные">💢 Враждебные</option>
-          <option value="напряжённые">⚡ Напряжённые</option>
-          <option value="нейтральные" selected>○ Нейтральные</option>
-          <option value="тёплые">🌿 Тёплые</option>
-          <option value="близкие">💙 Близкие</option>
-          <option value="преданные">❤️ Преданные</option>
-        </select>
-      </label>
+      <div class="form-group"><label class="form-label">Тип связи</label>
+        <select id="relationType"><option>Союз</option><option>Семья</option><option>Романтическая</option><option>Конфликт</option><option>Наставник / ученик</option><option>Соперники</option><option>Нейтральные</option></select></div>
+      <div class="form-group"><label class="form-label">Интенсивность</label>
+        <select id="relIntensity"><option value="враждебные">💢 Враждебные</option><option value="напряжённые">⚡ Напряжённые</option><option value="нейтральные" selected>○ Нейтральные</option><option value="тёплые">🌿 Тёплые</option><option value="близкие">💙 Близкие</option><option value="преданные">❤️ Преданные</option></select></div>
+      <div class="form-group"><label class="form-label">Взгляд первого</label><textarea id="fromView" placeholder="Как воспринимает другого…"></textarea></div>
+      <div class="form-group"><label class="form-label">Взгляд второго</label><textarea id="toView" placeholder="Как другой воспринимает…"></textarea></div>
     </div>
-    <p class="notice">✓ После сохранения связь появится у обоих персонажей и на карте связей.</p>
-    <footer>
-      <button value="cancel" class="soft">Отмена</button>
-      <button type="button" class="primary" id="saveRelation">Сохранить связь</button>
-    </footer>
+    <p class="notice">✓ После сохранения связь появится у обоих персонажей.</p>
+    <footer><button value="cancel" class="soft">Отмена</button><button type="button" class="primary" id="saveRelation">Сохранить</button></footer>
   </form>
 </dialog>
+
+<!-- ADD/EDIT CHAR MODAL -->
+<div id="charModal" class="modal-overlay">
+  <div class="modal-box">
+    <div class="dialog-head"><h3 id="charModalTitle">Новый персонаж</h3><button id="charModalClose">×</button></div>
+
+    <div class="form-tabs">
+      <button class="form-tab active" data-fs="basic">Основное</button>
+      <button class="form-tab" data-fs="appearance">Внешность</button>
+      <button class="form-tab" data-fs="personality">Характер</button>
+    </div>
+
+    <!-- Basic -->
+    <div id="fs_basic" class="form-section">
+      <div class="form-grid">
+        <div class="form-group"><label class="form-label">Имя *</label><input id="cf_name" placeholder="Полное имя"></div>
+        <div class="form-group"><label class="form-label">Прозвище</label><input id="cf_nickname" placeholder="Как называют"></div>
+        <div class="form-group"><label class="form-label">Роль</label>
+          <select id="cf_role"><option>Главный герой</option><option>Антагонист</option><option>Второстепенный</option><option>Союзник</option><option>Наставник</option><option>Любовный интерес</option><option>Другое</option></select></div>
+        <div class="form-group"><label class="form-label">Тип</label>
+          <select id="cf_char_type"><option value="main">Главный</option><option value="secondary">Второстепенный</option></select></div>
+        <div class="form-group"><label class="form-label">Семья / род</label><input id="cf_family" placeholder="Риверс, Фольбер…"></div>
+        <div class="form-group"><label class="form-label">Поколение</label><input id="cf_generation" placeholder="Внук Вольфганга…"></div>
+        <div class="form-group"><label class="form-label">Пол</label><input id="cf_gender" placeholder="Женский"></div>
+        <div class="form-group"><label class="form-label">Эмодзи</label><input id="cf_emoji" placeholder="🧙"></div>
+        <div class="form-group"><label class="form-label">Дата рождения</label><input id="cf_birth_date" placeholder="2 августа 44 года"></div>
+        <div class="form-group"><label class="form-label">Дата смерти</label><input id="cf_death_date" placeholder=""></div>
+        <div class="form-group full"><label class="form-label">Биография</label><textarea id="cf_bio" placeholder="Краткая история жизни…"></textarea></div>
+      </div>
+    </div>
+
+    <!-- Appearance -->
+    <div id="fs_appearance" class="form-section" style="display:none">
+      <div class="form-group"><label class="form-label">Внешность (полное описание)</label><textarea id="cf_appearance" style="min-height:200px" placeholder="Рост, телосложение, черты лица, волосы, глаза, стиль одежды, особые приметы…"></textarea></div>
+    </div>
+
+    <!-- Personality -->
+    <div id="fs_personality" class="form-section" style="display:none">
+      <div class="form-grid">
+        <div class="form-group full"><label class="form-label">Характер</label><textarea id="cf_personality" placeholder="Черты характера, темперамент, поведение…"></textarea></div>
+        <div class="form-group full"><label class="form-label">Мотивация</label><textarea id="cf_motivation" placeholder="Что движет персонажем…"></textarea></div>
+        <div class="form-group full"><label class="form-label">Тайна</label><textarea id="cf_secret" placeholder="Что скрывает…"></textarea></div>
+        <div class="form-group full"><label class="form-label">Заметки автора</label><textarea id="cf_notes" placeholder="Личные заметки…"></textarea></div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="soft" onclick="closeCharModal()">Отмена</button>
+      <button class="primary" id="saveCharBtn">Сохранить</button>
+    </div>
+  </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div id="lightbox"><img id="lbImg" alt=""></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="config.js"></script>
 <script src="app.js"></script>
 <script src="supabase-import.js"></script>
-
 </body>
 </html>
