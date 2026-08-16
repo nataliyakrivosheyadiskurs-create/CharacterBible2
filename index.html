@@ -166,16 +166,21 @@
 
 <!-- ADD/EDIT CHAR MODAL -->
 <div id="charModal" class="modal-overlay">
-  <div class="modal-box">
+  <div class="modal-box" style="max-width:720px">
     <div class="dialog-head"><h3 id="charModalTitle">Новый персонаж</h3><button id="charModalClose">×</button></div>
 
-    <div class="form-tabs">
+    <div class="form-tabs" style="overflow-x:auto;flex-wrap:nowrap;white-space:nowrap">
       <button class="form-tab active" data-fs="basic">Основное</button>
-      <button class="form-tab" data-fs="appearance">Внешность</button>
-      <button class="form-tab" data-fs="personality">Характер</button>
+      <button class="form-tab" data-fs="app_general">Параметры</button>
+      <button class="form-tab" data-fs="app_face">Лицо</button>
+      <button class="form-tab" data-fs="app_body">Тело и стиль</button>
+      <button class="form-tab" data-fs="char_base">Личность</button>
+      <button class="form-tab" data-fs="char_values">Ценности</button>
+      <button class="form-tab" data-fs="char_social">Общение</button>
+      <button class="form-tab" data-fs="char_deep">Глубокое</button>
     </div>
 
-    <!-- Basic -->
+    <!-- ОСНОВНОЕ -->
     <div id="fs_basic" class="form-section">
       <div class="form-grid">
         <div class="form-group"><label class="form-label">Имя *</label><input id="cf_name" placeholder="Полное имя"></div>
@@ -191,21 +196,168 @@
         <div class="form-group"><label class="form-label">Дата рождения</label><input id="cf_birth_date" placeholder="2 августа 44 года"></div>
         <div class="form-group"><label class="form-label">Дата смерти</label><input id="cf_death_date" placeholder=""></div>
         <div class="form-group full"><label class="form-label">Биография</label><textarea id="cf_bio" placeholder="Краткая история жизни…"></textarea></div>
+        <div class="form-group full"><label class="form-label">Заметки автора</label><textarea id="cf_notes" placeholder="Личные заметки…"></textarea></div>
       </div>
     </div>
 
-    <!-- Appearance -->
-    <div id="fs_appearance" class="form-section" style="display:none">
-      <div class="form-group"><label class="form-label">Внешность (полное описание)</label><textarea id="cf_appearance" style="min-height:200px" placeholder="Рост, телосложение, черты лица, волосы, глаза, стиль одежды, особые приметы…"></textarea></div>
+    <!-- ВНЕШНОСТЬ: ОБЩИЕ ПАРАМЕТРЫ -->
+    <div id="fs_app_general" class="form-section" style="display:none">
+      <div class="fs-section-title">1. Общие параметры</div>
+      <div class="form-grid">
+        <div class="form-group"><label class="form-label">Рост</label><input id="cf_height" placeholder="172 см"></div>
+        <div class="form-group"><label class="form-label">Телосложение</label><input id="cf_body_type" placeholder="Худощавый, спортивный…"></div>
+        <div class="form-group"><label class="form-label">Физическая сила (впечатление)</label><input id="cf_build_strength" placeholder="Выглядит хрупким / сильным…"></div>
+        <div class="form-group"><label class="form-label">Осанка</label><input id="cf_posture" placeholder="Прямая, сутулится…"></div>
+        <div class="form-group"><label class="form-label">Правша / левша</label><input id="cf_handedness" placeholder="Правша"></div>
+      </div>
+      <div class="fs-section-title" style="margin-top:14px">11–12. Походка и манера держаться</div>
+      <div class="form-grid">
+        <div class="form-group full"><label class="form-label">Походка</label><textarea id="cf_gait" style="min-height:60px" placeholder="Быстро, размеренно, бесшумно, широко шагает…"></textarea></div>
+        <div class="form-group full"><label class="form-label">Манера держаться</label><textarea id="cf_mannerisms" style="min-height:60px" placeholder="Руки в карманах, поправляет очки, теребит рукав…"></textarea></div>
+        <div class="form-group"><label class="form-label">Типичная эмоция</label><input id="cf_gaze" placeholder="Спокойствие, любопытство, насмешка…"></div>
+        <div class="form-group"><label class="form-label">Голос</label><input id="cf_voice" placeholder="Тихий, хриплый, уверенный…"></div>
+      </div>
+      <div class="fs-section-title" style="margin-top:14px">19–20. Впечатление и узнаваемость</div>
+      <div class="form-grid">
+        <div class="form-group full"><label class="form-label">Первое впечатление незнакомца</label><textarea id="cf_first_impression" style="min-height:60px" placeholder="«Этому человеку можно доверять» / «Он выглядит опасным»…"></textarea></div>
+        <div class="form-group full"><label class="form-label">Что делает героя узнаваемым</label><textarea id="cf_signature_feature" style="min-height:60px" placeholder="Взгляд, улыбка, шрам, прическа, характерная поза…"></textarea></div>
+      </div>
+      <div class="form-group" style="margin-top:8px"><label class="form-label">Общее описание внешности</label><textarea id="cf_appearance" style="min-height:80px" placeholder="Общий образ своими словами…"></textarea></div>
     </div>
 
-    <!-- Personality -->
-    <div id="fs_personality" class="form-section" style="display:none">
+    <!-- ВНЕШНОСТЬ: ЛИЦО -->
+    <div id="fs_app_face" class="form-section" style="display:none">
+      <div class="fs-section-title">2. Форма головы и лица</div>
       <div class="form-grid">
-        <div class="form-group full"><label class="form-label">Характер</label><textarea id="cf_personality" placeholder="Черты характера, темперамент, поведение…"></textarea></div>
-        <div class="form-group full"><label class="form-label">Мотивация</label><textarea id="cf_motivation" placeholder="Что движет персонажем…"></textarea></div>
-        <div class="form-group full"><label class="form-label">Тайна</label><textarea id="cf_secret" placeholder="Что скрывает…"></textarea></div>
-        <div class="form-group full"><label class="form-label">Заметки автора</label><textarea id="cf_notes" placeholder="Личные заметки…"></textarea></div>
+        <div class="form-group"><label class="form-label">Форма лица</label><input id="cf_face_shape" placeholder="Овальная, квадратная, сердцевидная…"></div>
+        <div class="form-group"><label class="form-label">Лоб</label><input id="cf_forehead" placeholder="Высокий широкий / низкий узкий…"></div>
+        <div class="form-group"><label class="form-label">Скулы</label><input id="cf_cheekbones" placeholder="Выраженные / мягкие / незаметные"></div>
+        <div class="form-group"><label class="form-label">Подбородок</label><input id="cf_chin" placeholder="Острый, широкий, округлый, тяжёлый"></div>
+        <div class="form-group"><label class="form-label">Челюсть</label><input id="cf_jaw" placeholder="Мягкая, выраженная, угловатая"></div>
+      </div>
+      <div class="fs-section-title" style="margin-top:14px">3. Кожа</div>
+      <div class="form-grid">
+        <div class="form-group"><label class="form-label">Оттенок кожи</label><input id="cf_skin" placeholder="Светлая, смуглая, оливковая…"></div>
+        <div class="form-group"><label class="form-label">Загар / веснушки / особенности</label><input id="cf_skin_tan" placeholder="Легко загорает, веснушки, родинки…"></div>
+        <div class="form-group full"><label class="form-label">Шрамы, ожоги, особые приметы</label><textarea id="cf_distinctive_marks" style="min-height:60px" placeholder="Шрам над бровью, родинка на шее…"></textarea></div>
+      </div>
+      <div class="fs-section-title" style="margin-top:14px">4. Глаза</div>
+      <div class="form-grid">
+        <div class="form-group"><label class="form-label">Цвет глаз</label><input id="cf_eyes" placeholder="Серо-зелёные с золотыми крапинками…"></div>
+        <div class="form-group"><label class="form-label">Размер и форма</label><input id="cf_eye_shape" placeholder="Миндалевидные, широко раскрытые…"></div>
+        <div class="form-group"><label class="form-label">Расположение / посадка</label><input id="cf_eye_set" placeholder="Широко расставлены, глубоко посажены…"></div>
+        <div class="form-group"><label class="form-label">Ресницы и брови</label><input id="cf_brows_lashes" placeholder="Густые тёмные брови, длинные ресницы…"></div>
+      </div>
+      <div class="fs-section-title" style="margin-top:14px">5–6. Нос и губы</div>
+      <div class="form-grid">
+        <div class="form-group"><label class="form-label">Нос</label><input id="cf_nose" placeholder="Прямой, короткий, с горбинкой…"></div>
+        <div class="form-group"><label class="form-label">Губы</label><input id="cf_lips" placeholder="Тонкие / полные, уголки вниз / вверх…"></div>
+      </div>
+      <div class="fs-section-title" style="margin-top:14px">7. Волосы</div>
+      <div class="form-grid">
+        <div class="form-group"><label class="form-label">Цвет волос</label><input id="cf_hair" placeholder="Тёмно-каштановые с рыжиной…"></div>
+        <div class="form-group"><label class="form-label">Текстура и густота</label><input id="cf_hair_texture" placeholder="Густые, слегка волнистые…"></div>
+        <div class="form-group full"><label class="form-label">Причёска и поведение волос</label><textarea id="cf_hairstyle" style="min-height:60px" placeholder="Носит собранными, выбиваются пряди, пробор слева, ведут себя на ветру…"></textarea></div>
+      </div>
+      <div class="fs-section-title" style="margin-top:14px">8–9. Уши и шея</div>
+      <div class="form-grid">
+        <div class="form-group"><label class="form-label">Уши</label><input id="cf_ears" placeholder="Небольшие, прижатые, скрыты волосами…"></div>
+        <div class="form-group"><label class="form-label">Шея</label><input id="cf_neck" placeholder="Длинная, тонкая / крепкая…"></div>
+      </div>
+    </div>
+
+    <!-- ВНЕШНОСТЬ: ТЕЛО И СТИЛЬ -->
+    <div id="fs_app_body" class="form-section" style="display:none">
+      <div class="fs-section-title">10. Руки</div>
+      <div class="form-grid">
+        <div class="form-group full"><label class="form-label">Руки</label><textarea id="cf_hands" style="min-height:60px" placeholder="Длинные пальцы, мозоли, следы работы, тонкие кисти…"></textarea></div>
+      </div>
+      <div class="fs-section-title" style="margin-top:14px">15–16. Одежда и обувь</div>
+      <div class="form-grid">
+        <div class="form-group full"><label class="form-label">Стиль одежды</label><textarea id="cf_style" style="min-height:60px" placeholder="Качество ткани, новая/поношенная, аккуратная/мятая…"></textarea></div>
+        <div class="form-group"><label class="form-label">Любимые цвета</label><input id="cf_color_palette" placeholder="Тёмно-синий, серый, бордовый…"></div>
+        <div class="form-group"><label class="form-label">Обувь</label><input id="cf_footwear" placeholder="Ботинки, потёртые / дорогие, чистые…"></div>
+      </div>
+      <div class="fs-section-title" style="margin-top:14px">17–18. Аксессуары и предметы</div>
+      <div class="form-grid">
+        <div class="form-group full"><label class="form-label">Украшения и аксессуары</label><textarea id="cf_accessories" style="min-height:60px" placeholder="Часы, перчатки, шарф, сколько украшений…"></textarea></div>
+        <div class="form-group full"><label class="form-label">Личные предметы (почти всегда при нём)</label><textarea id="cf_personal_items" style="min-height:60px" placeholder="Блокнот, компас, инструменты, книга…"></textarea></div>
+      </div>
+    </div>
+
+    <!-- ХАРАКТЕР: ОСНОВА ЛИЧНОСТИ -->
+    <div id="fs_char_base" class="form-section" style="display:none">
+      <div class="fs-section-title">1. Основа личности</div>
+      <div class="form-grid">
+        <div class="form-group"><label class="form-label">Три слова — описывают</label><input id="cf_personality_words" placeholder="Смелый, саркастичный, преданный"></div>
+        <div class="form-group"><label class="form-label">Три слова — не подходят</label><input id="cf_personality_not" placeholder="Трусливый, мелочный, равнодушный"></div>
+        <div class="form-group"><label class="form-label">Темперамент</label><input id="cf_temperament" placeholder="Холерик, сангвиник…"></div>
+        <div class="form-group"><label class="form-label">Интроверт / экстраверт</label><input id="cf_introvert" placeholder="Интроверт / амбиверт…"></div>
+        <div class="form-group full"><label class="form-label">Что важнее: разум, чувства или долг?</label><input id="cf_core_priority" placeholder="Чувства — решает сердцем, но старается думать"></div>
+        <div class="form-group full"><label class="form-label">Шкалы 1–10 (эмоциональность, импульсивность, терпение, уверенность, упрямство)</label><textarea id="cf_personality_scales" style="min-height:60px" placeholder="Эмоциональность: 7&#10;Импульсивность: 4&#10;Терпение: 8&#10;Уверенность: 6&#10;Упрямство: 9"></textarea></div>
+        <div class="form-group full"><label class="form-label">Общий характер</label><textarea id="cf_personality" style="min-height:80px" placeholder="Основные черты, как ведёт себя в целом…"></textarea></div>
+      </div>
+      <div class="fs-section-title" style="margin-top:14px">2. Самооценка</div>
+      <div class="form-grid">
+        <div class="form-group full"><label class="form-label">Самооценка</label><textarea id="cf_self_esteem" style="min-height:60px" placeholder="Любит ли себя, считает ли хорошим человеком, сомневается ли в себе…"></textarea></div>
+        <div class="form-group"><label class="form-label">Главное достоинство (своими глазами)</label><input id="cf_self_strength" placeholder=""></div>
+        <div class="form-group"><label class="form-label">Главный недостаток (своими глазами)</label><input id="cf_self_weakness" placeholder=""></div>
+      </div>
+      <div class="fs-section-title" style="margin-top:14px">21–23. Речь и парадоксы</div>
+      <div class="form-grid">
+        <div class="form-group full"><label class="form-label">Манера речи</label><textarea id="cf_speech_style" style="min-height:60px" placeholder="Говорит быстро / медленно, простыми / сложными словами, часто задаёт вопросы…"></textarea></div>
+        <div class="form-group full"><label class="form-label">Главные парадоксы личности</label><textarea id="cf_paradoxes" style="min-height:80px" placeholder="Очень смелый, но боится темноты&#10;Ненавидит ложь, но постоянно недоговаривает…"></textarea></div>
+        <div class="form-group full"><label class="form-label">Внутренние противоречия</label><textarea id="cf_inner_conflicts" style="min-height:60px" placeholder="Что говорит, но сам не соблюдает? В чём обманывает себя?…"></textarea></div>
+      </div>
+    </div>
+
+    <!-- ХАРАКТЕР: ЦЕННОСТИ И СТРАХИ -->
+    <div id="fs_char_values" class="form-section" style="display:none">
+      <div class="fs-section-title">3. Ценности и мировоззрение</div>
+      <div class="form-group" style="margin-bottom:10px"><label class="form-label">Мировоззрение / что важнее всего в жизни</label><textarea id="cf_worldview" style="min-height:70px" placeholder="За что готов умереть? За что никогда не станет бороться?"></textarea></div>
+      <div class="form-group" style="margin-bottom:10px"><label class="form-label">Что считает непростительным / что простит врагу</label><textarea id="cf_unforgivable" style="min-height:60px" placeholder=""></textarea></div>
+      <div class="form-group" style="margin-bottom:10px"><label class="form-label">Моральные границы</label><textarea id="cf_moral_limits" style="min-height:60px" placeholder="Может ли соврать ради добра? Убить? Где его черта?"></textarea></div>
+      <div class="fs-section-title" style="margin-top:14px">4. Страхи</div>
+      <div class="form-group" style="margin-bottom:10px"><label class="form-label">Страхи</label><textarea id="cf_fears" style="min-height:80px" placeholder="Самый большой страх&#10;Самый иррациональный&#10;Детские страхи&#10;Боится ли смерти / одиночества / ответственности…"></textarea></div>
+      <div class="fs-section-title" style="margin-top:14px">5. Желания и мотивация</div>
+      <div class="form-group" style="margin-bottom:10px"><label class="form-label">Желания и мечты</label><textarea id="cf_desires" style="min-height:70px" placeholder="О чём мечтает, главная цель, скрытая цель…"></textarea></div>
+      <div class="form-group" style="margin-bottom:10px"><label class="form-label">Главная мотивация</label><textarea id="cf_motivation" style="min-height:60px" placeholder="Что движет персонажем в истории…"></textarea></div>
+      <div class="fs-section-title" style="margin-top:14px">14. Реакция на стресс</div>
+      <div class="form-group"><label class="form-label">Реакция на стресс</label><textarea id="cf_stress_response" style="min-height:70px" placeholder="Замыкается? Становится раздражительным? Теряет аппетит? Ищет поддержку?"></textarea></div>
+    </div>
+
+    <!-- ХАРАКТЕР: ОБЩЕНИЕ И ОТНОШЕНИЯ -->
+    <div id="fs_char_social" class="form-section" style="display:none">
+      <div class="fs-section-title">6. Общение</div>
+      <div class="form-group" style="margin-bottom:10px"><label class="form-label">Общение с людьми</label><textarea id="cf_social" style="min-height:80px" placeholder="Легко знакомится? Любит компании? Слушает или говорит? Умеет убеждать?"></textarea></div>
+      <div class="fs-section-title" style="margin-top:14px">7. Дружба</div>
+      <div class="form-group" style="margin-bottom:10px"><label class="form-label">Дружба</label><textarea id="cf_friendship" style="min-height:70px" placeholder="Как выбирает друзей, легко ли доверяет, есть ли собственничество…"></textarea></div>
+      <div class="fs-section-title" style="margin-top:14px">8. Конфликты</div>
+      <div class="form-group" style="margin-bottom:10px"><label class="form-label">Конфликты</label><textarea id="cf_conflict_style" style="min-height:70px" placeholder="Как реагирует на критику, мстит ли, быстро ли остывает…"></textarea></div>
+      <div class="fs-section-title" style="margin-top:14px">9–10. Лидерство и интеллект</div>
+      <div class="form-group" style="margin-bottom:10px"><label class="form-label">Лидерство</label><textarea id="cf_leadership" style="min-height:60px" placeholder="Любит руководить? Берёт ответственность? Делегирует?"></textarea></div>
+      <div class="form-group" style="margin-bottom:10px"><label class="form-label">Интеллект и мышление</label><textarea id="cf_intellect" style="min-height:70px" placeholder="Что лучше всего получается, любознателен ли, рационален или интуитивен…"></textarea></div>
+      <div class="fs-section-title" style="margin-top:14px">15. Поведение среди близких</div>
+      <div class="form-group"><label class="form-label">Поведение среди близких</label><textarea id="cf_behavior_close" style="min-height:80px" placeholder="Каким становится рядом с друзьями / семьёй / любимым / когда один…"></textarea></div>
+    </div>
+
+    <!-- ХАРАКТЕР: ГЛУБОКОЕ -->
+    <div id="fs_char_deep" class="form-section" style="display:none">
+      <div class="fs-section-title">11–13. Чувства, юмор, привычки</div>
+      <div class="form-grid">
+        <div class="form-group full"><label class="form-label">Эмоциональность</label><textarea id="cf_emotions" style="min-height:60px" placeholder="Легко влюбляется? Плачет при людях? Часто чувствует вину?"></textarea></div>
+        <div class="form-group full"><label class="form-label">Юмор</label><textarea id="cf_humor" style="min-height:60px" placeholder="Любит шутить? Понимает сарказм? Над чем никогда не смеётся?"></textarea></div>
+        <div class="form-group full"><label class="form-label">Повседневные привычки</label><textarea id="cf_habits" style="min-height:60px" placeholder="Рано встаёт? Аккуратный? Планирует день? Любит рутину?"></textarea></div>
+        <div class="form-group full"><label class="form-label">Маленькие слабости и любимое</label><textarea id="cf_favorites" style="min-height:60px" placeholder="Любимое блюдо, напиток, время суток, место, запах, тайное занятие…"></textarea></div>
+        <div class="form-group full"><label class="form-label">Что выводит из себя</label><textarea id="cf_triggers" style="min-height:60px" placeholder="Какие поступки раздражают? Какие слова ранят?"></textarea></div>
+      </div>
+      <div class="fs-section-title" style="margin-top:14px">Как воспринимают другие</div>
+      <div class="form-group" style="margin-bottom:10px"><label class="form-label">Как воспринимают разные люди</label><textarea id="cf_perception" style="min-height:80px" placeholder="Первое впечатление&#10;После недели знакомства&#10;После года дружбы&#10;Глазами врагов&#10;Глазами детей / пожилых…"></textarea></div>
+      <div class="fs-section-title" style="margin-top:14px">Тайна и заметки</div>
+      <div class="form-grid">
+        <div class="form-group full"><label class="form-label">Тайна / что скрывает</label><textarea id="cf_secret" style="min-height:60px" placeholder="Что не рассказывает никому…"></textarea></div>
+        <div class="form-group full"><label class="form-label">Счастливейшая память</label><textarea id="cf_happiest_memory" style="min-height:60px" placeholder=""></textarea></div>
+        <div class="form-group full"><label class="form-label">Болезненная память</label><textarea id="cf_painful_memory" style="min-height:60px" placeholder=""></textarea></div>
       </div>
     </div>
 
