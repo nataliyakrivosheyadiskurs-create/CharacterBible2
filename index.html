@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Character Bible Next</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<aside>
+  <div class="brand">
+    <b>✦</b>
+    <span>Character Bible<small>NEXT · TEST SPACE</small></span>
+  </div>
+  <nav>
+    <button class="active" data-tab="library">⌂ Обзор</button>
+    <button data-tab="character">♙ Карточка героя</button>
+    <button data-tab="relations">⌘ Связи</button>
+    <button data-tab="album">▧ Альбом</button>
+    <button data-tab="migration">⇄ Миграция</button>
+  </nav>
+  <div class="safe">
+    <b>Тестовое пространство</b>
+    <p>Отдельный Supabase, не связан с основным приложением. Безопасно тестировать новый дизайн.</p>
+    <span>● Supabase подключён</span>
+  </div>
+</aside>
+
+<main>
+  <header>
+    <div>
+      <label id="headerLabel">CHARACTER BIBLE NEXT</label>
+      <h1 id="pageTitle">История в одном взгляде</h1>
+    </div>
+    <div class="actions">
+      <button class="soft" id="reset">↺ Обновить</button>
+      <button class="primary" data-open="migration">⇄ Импорт данных</button>
+    </div>
+  </header>
+
+  <!-- ── LIBRARY ── -->
+  <section id="library" class="tab active">
+    <div class="intro">
+      <div>
+        <h2>Персонажи</h2>
+        <p>Роли в книгах видны сразу — без захода в карточку.</p>
+        <div class="chips">
+          <button class="chip selected" data-filter="all">Все</button>
+          <button class="chip" data-filter="lead">Главные герои</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div><b id="characterCount">—</b><span>персонажей</span></div>
+      <div><b id="bookCount">—</b><span>книг</span></div>
+      <div><b id="imageCount">—</b><span>изображений</span></div>
+      <div><b id="relationCount">—</b><span>связей</span></div>
+    </div>
+
+    <div id="cards" class="cards">
+      <div class="empty" style="grid-column:1/-1">
+        <div class="empty-icon">⏳</div>
+        <p>Загрузка данных…</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CHARACTER ── -->
+  <section id="character" class="tab">
+    <div class="character-head">
+      <div class="portrait large" id="heroPortrait">?</div>
+      <div style="flex:1">
+        <div id="heroRoles" class="roles"></div>
+        <h2 id="heroName">Выбери персонажа</h2>
+        <p id="heroBio" style="font-size:13px;color:var(--text2);margin-top:6px;max-width:600px">Нажми на карточку в разделе «Обзор»</p>
+        <small id="heroMeta" style="color:var(--text3);font-size:11px;display:block;margin-top:6px"></small>
+      </div>
+      <div class="hero-buttons">
+        <button class="primary" id="pdfExport">↓ Экспорт PDF</button>
+        <button class="soft" id="albumBtn">Альбом</button>
+      </div>
+    </div>
+
+    <div class="twocol">
+      <article>
+        <div class="head">
+          <h3>Отношения с двух сторон</h3>
+          <button class="primary small" data-open="relation">＋ Связь</button>
+        </div>
+        <div id="relationsList">
+          <div class="empty"><div class="empty-icon">🔗</div><p>Открой персонажа</p></div>
+        </div>
+      </article>
+
+      <article>
+        <div class="head">
+          <h3>Участие в книгах</h3>
+        </div>
+        <div id="bookList">
+          <div class="empty"><div class="empty-icon">📚</div><p>Открой персонажа</p></div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ── RELATIONS ── -->
+  <section id="relations" class="tab">
+    <div class="intro">
+      <div>
+        <h2>Карта связей</h2>
+        <p>Одна связь хранится в одном месте и содержит две точки зрения.</p>
+      </div>
+      <button class="primary" data-open="relation">＋ Новая связь</button>
+    </div>
+
+    <div class="relations-list" id="relationsFullList">
+      <div class="empty"><div class="empty-icon">⌘</div><p>Загрузка…</p></div>
+    </div>
+  </section>
+
+  <!-- ── ALBUM ── -->
+  <section id="album" class="tab">
+    <div class="intro">
+      <div>
+        <h2>Альбом образов</h2>
+        <p>Фотографии персонажей с описанием периода, эмоции и комментария.</p>
+      </div>
+      <button class="primary" id="albumPdf">↓ PDF альбома</button>
+    </div>
+
+    <div class="age-line">
+      <span>Начало хронологии</span>
+      <i></i>
+      <span>Конец хронологии</span>
+    </div>
+
+    <div id="albumGrid" class="album-grid">
+      <div class="empty" style="grid-column:1/-1">
+        <div class="empty-icon">🖼</div>
+        <p>Изображений пока нет</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── MIGRATION ── -->
+  <section id="migration" class="tab">
+    <div class="migration">
+      <label>БЕЗОПАСНЫЙ ПЕРЕНОС</label>
+      <h2>Импорт данных</h2>
+      <p>Загрузи JSON из старого приложения — персонажи, связи и изображения импортируются автоматически. CSV-файл позволяет импортировать базовую информацию о персонажах.</p>
+
+      <div class="steps">
+        <div>
+          <b>1</b>
+          <span>
+            <strong>Экспортируй из старого приложения</strong>
+            <small>Используй кнопку JSON-экспорта — он сохраняет всё: поля, роли, связи и ссылки на изображения.</small>
+          </span>
+        </div>
+        <div>
+          <b>2</b>
+          <span>
+            <strong>Загрузи и проверь</strong>
+            <small>После выбора файла увидишь предварительный список — до записи в базу.</small>
+          </span>
+        </div>
+        <div>
+          <b>3</b>
+          <span>
+            <strong>Подтверди импорт</strong>
+            <small>Данные запишутся в новый Supabase. Операция необратима, но не затрагивает старое приложение.</small>
+          </span>
+        </div>
+      </div>
+
+      <div class="import-grid">
+        <label class="upload">
+          <input type="file" id="importFile" accept=".json,.csv">
+          <b>↑ Выбрать файл</b>
+          <span>JSON или CSV</span>
+        </label>
+        <div class="warning">
+          <b>💡 Рекомендуемый формат — JSON</b>
+          <p>JSON из старого приложения содержит полную структуру: связи с двух сторон, роли по книгам, ссылки на изображения в Supabase Storage.</p>
+          <p>CSV подходит для базовой информации о персонажах без связей и фото.</p>
+          <button class="soft" id="downloadTemplate">↓ Шаблон CSV</button>
+        </div>
+      </div>
+
+      <div id="importResult" class="import-result">Файл ещё не выбран.</div>
+    </div>
+  </section>
+</main>
+
+<!-- ── RELATION DIALOG ── -->
+<dialog id="relationDialog">
+  <form method="dialog">
+    <div class="dialog-head">
+      <h3>Двусторонняя связь</h3>
+      <button value="cancel">×</button>
+    </div>
+    <div class="pair">
+      <span id="fromName">Персонаж</span>
+      <b>↔</b>
+      <select id="toCharacter" style="flex:1"></select>
+    </div>
+    <div class="form-grid">
+      <label>
+        Взгляд первого персонажа
+        <textarea id="fromView" placeholder="Как этот персонаж воспринимает другого…"></textarea>
+      </label>
+      <label>
+        Взгляд второго персонажа
+        <textarea id="toView" placeholder="Как другой воспринимает первого…"></textarea>
+      </label>
+      <label>
+        Тип связи
+        <select id="relationType">
+          <option>Союз</option>
+          <option>Семья</option>
+          <option>Романтическая</option>
+          <option>Конфликт / враги</option>
+          <option>Наставник / ученик</option>
+          <option>Соперники</option>
+          <option>Нейтральные</option>
+        </select>
+      </label>
+      <label>
+        Интенсивность
+        <select id="relIntensity">
+          <option value="враждебные">💢 Враждебные</option>
+          <option value="напряжённые">⚡ Напряжённые</option>
+          <option value="нейтральные" selected>○ Нейтральные</option>
+          <option value="тёплые">🌿 Тёплые</option>
+          <option value="близкие">💙 Близкие</option>
+          <option value="преданные">❤️ Преданные</option>
+        </select>
+      </label>
+    </div>
+    <p class="notice">✓ После сохранения связь появится у обоих персонажей и на карте связей.</p>
+    <footer>
+      <button value="cancel" class="soft">Отмена</button>
+      <button type="button" class="primary" id="saveRelation">Сохранить связь</button>
+    </footer>
+  </form>
+</dialog>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script src="app.js"></script>
+<script src="supabase-import.js"></script>
+
+</body>
+</html>
